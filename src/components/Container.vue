@@ -20,6 +20,7 @@
       methods:{
           addTodoMsg(){
             this.$refs.itemList.addMsg(this.todoMsg)
+            this.todoMsg = ""
           }
       }
     }
