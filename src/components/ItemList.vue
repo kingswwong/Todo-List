@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div id="itemList">
     <div v-for="(item, index ) in showList">
       <Item :is-finish="item.isFinish" :contentMsg="item.contentMsg" :index="item.index" :show-index="index + 1" :status="status"
             @updateMsg="updateMsg"
             @updateStatus="updateStatus" ref="item"></Item>
     </div>
-    <button @click="updateShowList(-1)">All</button>
-    <button @click="updateShowList(0)">Active</button>
-    <button @click="updateShowList(1)">Complete</button>
+<!--    <button @click="updateShowList(-1)">All</button>-->
+<!--    <button @click="updateShowList(0)">Active</button>-->
+<!--    <button @click="updateShowList(1)">Complete</button>-->
   </div>
 </template>
 

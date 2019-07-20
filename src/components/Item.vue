@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <div v-if="isShow">{{showIndex}}<input type="checkbox" v-model="isFinish" @change="updateIsFinished"> <span
-      @click="isShow = false">{{contentMsg}}</span></div>
+  <div >
+    <div v-if="isShow">
+      <div style="float: right"><input type="checkbox" v-model="isFinish" @change="updateIsFinished"></div>
+      <div @click="isShow = false" id="contentMsg">{{contentMsg}}</div>
+    </div>
     <div v-if="!isShow" @keypress.enter="updateContentMsg"><input type="text" v-model="content"></div>
   </div>
 </template>
