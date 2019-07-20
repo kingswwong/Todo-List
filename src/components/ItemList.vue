@@ -1,12 +1,13 @@
 <template>
   <div>
-    <div v-for="(item, index ) in itemList">
-      <Item :is-finish="item.isFinish" :contentMsg="item.contentMsg" :index="index + 1" @updateMsg="updateMsg"
-            v-if="type === -1 || type == item.isFinish" @updateStatus="updateStatus"></Item>
+    <div v-for="(item, index ) in showList">
+      <Item :is-finish="item.isFinish" :contentMsg="item.contentMsg" :index="item.index" :show-index="index + 1" :status="status"
+            @updateMsg="updateMsg"
+            @updateStatus="updateStatus" ref="item"></Item>
     </div>
-    <button @click="type = -1">All</button>
-    <button @click="type = 0">Active</button>
-    <button @click="type = 1">Complete</button>
+    <button @click="updateShowList(-1)">All</button>
+    <button @click="updateShowList(0)">Active</button>
+    <button @click="updateShowList(1)">Complete</button>
   </div>
 </template>
 
@@ -20,26 +21,36 @@
     data() {
       return {
         itemList: [],
-        type: -1
+        showList: [],
+        status: -1
       }
     },
     methods: {
-      addMsg(message) {
+     addMsg(message) {
         let item = {
-          isFinish: 0,
-          contentMsg: message
+          isFinish: false,
+          contentMsg: message,
+          index: this.itemList.length
         }
         this.itemList.push(item);
-      },
-      finish(index) {
-        this.itemList.splice(index, 1)
+        this.updateShowList(this.status)
       },
       updateMsg(message, index) {
-        this.itemList[index - 1].contentMsg = message
+        this.itemList[index].contentMsg = message
       },
       updateStatus(status, index) {
-        this.itemList[index - 1].isFinish = status
-        console.log(this.itemList)
+        this.itemList[index].isFinish = status
+        this.updateShowList(this.status)
+      },
+       async updateShowList(status) {
+        this.status = status
+        if (this.status === -1) {
+          this.showList = this.itemList
+        } else {
+          this.showList = this.itemList.filter((item) => {
+            return item.isFinish === Boolean(status)
+          })
+        }
       }
     }
   }

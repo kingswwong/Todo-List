@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isShow">{{index}}<input type="checkbox" v-model="complete" @change="updateIsFinished"> <span
+    <div v-if="isShow">{{showIndex}}<input type="checkbox" v-model="isFinish" @change="updateIsFinished"> <span
       @click="isShow = false">{{contentMsg}}</span></div>
     <div v-if="!isShow" @keypress.enter="updateContentMsg"><input type="text" v-model="content"></div>
   </div>
@@ -10,15 +10,15 @@
   export default {
     name: "Item",
     props: {
-      isFinish: Number,
+      isFinish: Boolean,
       contentMsg: String,
-      index: Number
+      index: Number,
+      showIndex: Number,
     },
     data() {
       return {
         isShow: true,
-        content: this.contentMsg,
-        complete: !!this.isFinish
+        content: this.contentMsg
       }
     },
     methods: {
@@ -27,8 +27,7 @@
         this.$emit('updateMsg', this.content, this.index)
       },
       updateIsFinished() {
-        this.complete = !this.complete;
-        this.$emit('updateStatus', this.complete ? 1 : 0, this.index)
+        this.$emit('updateStatus', this.isFinish, this.index)
       }
     }
   }
