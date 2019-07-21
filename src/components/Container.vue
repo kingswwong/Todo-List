@@ -3,8 +3,10 @@
     <h1>Todo List</h1>
     <div id="msgInput">
       <input type="text" v-model="todoMsg" @focus="buttonShow = true"
-             @blur="todoMsg === '' ? buttonShow = false : buttonShow = true" :placeholder="!buttonShow ? 'Write SomeThing : ' + inputPlaceMsgList[Math.floor(Math.random() * 10)] : ''"><span><button @click="addTodoMsg"
-                                                                                           v-if="buttonShow">Add</button></span>
+             @blur="todoMsg === '' ? buttonShow = false : buttonShow = true"
+             :placeholder="!buttonShow ? 'Write SomeThing : ' + inputPlaceMsgList[Math.floor(Math.random() * 10)] : ''"><span><button
+      @click="addTodoMsg"
+      v-if="buttonShow">Add</button></span>
     </div>
     <ItemList ref='itemList'></ItemList>
   </div>
@@ -20,7 +22,7 @@
       return {
         todoMsg: "",
         buttonShow: false,
-        inputPlaceMsgList:[
+        inputPlaceMsgList: [
           "Yshenj is so handsome!!",
           "lzhou is so beautiful!!",
           "Let's Have a Rest",

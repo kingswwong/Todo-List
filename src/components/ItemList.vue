@@ -9,9 +9,9 @@
               @updateStatus="updateStatus" ref="item"></Item>
       </div>
     </transition-group>
-        <button @click="updateShowList(-1)" :class="{unActiveButton: status !== -1}">All</button>
-        <button @click="updateShowList(0)" :class="{unActiveButton: status !== 0}">Active</button>
-        <button @click="updateShowList(1)" :class="{unActiveButton: status !== 1}">Complete</button>
+    <button @click="updateShowList(-1)" :class="{unActiveButton: status !== -1}">All</button>
+    <button @click="updateShowList(0)" :class="{unActiveButton: status !== 0}">Active</button>
+    <button @click="updateShowList(1)" :class="{unActiveButton: status !== 1}">Complete</button>
   </div>
 </template>
 
