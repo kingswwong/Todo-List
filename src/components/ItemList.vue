@@ -1,13 +1,17 @@
 <template>
   <div id="itemList">
-    <div v-for="(item, index ) in showList">
-      <Item :is-finish="item.isFinish" :contentMsg="item.contentMsg" :index="item.index" :show-index="index + 1" :status="status"
-            @updateMsg="updateMsg"
-            @updateStatus="updateStatus" ref="item"></Item>
-    </div>
-<!--    <button @click="updateShowList(-1)">All</button>-->
-<!--    <button @click="updateShowList(0)">Active</button>-->
-<!--    <button @click="updateShowList(1)">Complete</button>-->
+    <transition-group name="slide-fade">
+      <div v-for="(item, index ) in showList" :key="index">
+
+        <Item :is-finish="item.isFinish" :contentMsg="item.contentMsg" :index="item.index" :show-index="index + 1"
+              :status="status"
+              @updateMsg="updateMsg"
+              @updateStatus="updateStatus" ref="item"></Item>
+      </div>
+    </transition-group>
+        <button @click="updateShowList(-1)" :class="{unActiveButton: status !== -1}">All</button>
+        <button @click="updateShowList(0)" :class="{unActiveButton: status !== 0}">Active</button>
+        <button @click="updateShowList(1)" :class="{unActiveButton: status !== 1}">Complete</button>
   </div>
 </template>
 
@@ -26,7 +30,7 @@
       }
     },
     methods: {
-     addMsg(message) {
+      addMsg(message) {
         let item = {
           isFinish: false,
           contentMsg: message,
@@ -42,10 +46,11 @@
         this.itemList[index].isFinish = status
         this.updateShowList(this.status)
       },
-       async updateShowList(status) {
+      async updateShowList(status) {
         this.status = status
         if (this.status === -1) {
           this.showList = this.itemList
+
         } else {
           this.showList = this.itemList.filter((item) => {
             return item.isFinish === Boolean(status)

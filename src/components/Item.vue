@@ -1,10 +1,14 @@
 <template>
-  <div >
+  <div>
     <div v-if="isShow">
-      <div style="float: right"><input type="checkbox" v-model="isFinish" @change="updateIsFinished"></div>
-      <div @click="isShow = false" id="contentMsg">{{contentMsg}}</div>
+      <span @click="isShow = false" id="contentMsg" :class=" {finish: isFinish}">{{contentMsg}}</span>
+      <div style="float: right;padding-top: 20px;">
+        <input type="checkbox" v-model="isFinish" @change="updateIsFinished" :id="index">
+        <label :for="index"></label>
+      </div>
     </div>
     <div v-if="!isShow" @keypress.enter="updateContentMsg"><input type="text" v-model="content"></div>
+
   </div>
 </template>
 
