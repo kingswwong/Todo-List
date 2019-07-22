@@ -1,13 +1,13 @@
 <template>
   <div>
     <div v-if="isShow">
-      <span @click="isShow = false" id="contentMsg" :class=" {finish: isFinish}">{{contentMsg}}</span>
+      <span @click="isShow = false" id="contentMsg" :class=" {finish: info.isFinish}">{{info.contentMsg}}</span>
       <div style="float: right;padding-top: 20px;">
-        <input type="checkbox" v-model="isFinish" @change="updateIsFinished" :id="index">
+        <input type="checkbox" v-model="info.isFinish" @change="updateIsFinished" :id="index">
         <label :for="index"></label>
       </div>
     </div>
-    <div v-if="!isShow" @keypress.enter="updateContentMsg"><input type="text" v-model="content"></div>
+    <div v-if="!isShow" @keypress.enter="updateContentMsg"><input type="text" v-model="info.contentMsg"></div>
 
   </div>
 </template>
@@ -16,24 +16,27 @@
   export default {
     name: "Item",
     props: {
-      isFinish: Boolean,
-      contentMsg: String,
       index: Number,
-      showIndex: Number,
     },
     data() {
       return {
         isShow: true,
-        content: this.contentMsg
       }
+    },
+    computed: {
+      info: {
+        get(){
+          return this.$store.state.itemList[this.index]
+        }
+      },
     },
     methods: {
       updateContentMsg() {
         this.isShow = true
-        this.$emit('updateMsg', this.content, this.index)
+        this.$store.commit('updateMsg',{contentMsg:this.info.contentMsg, index: this.index})
       },
       updateIsFinished() {
-        this.$emit('updateStatus', this.isFinish, this.index)
+        this.$store.commit('updateStatus', {isFinish:this.info.isFinish, index: this.index})
       }
     }
   }

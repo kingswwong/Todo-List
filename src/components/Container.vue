@@ -40,7 +40,12 @@
     },
     methods: {
       addTodoMsg() {
-        this.$refs.itemList.addMsg(this.todoMsg)
+        let item = {
+          isFinish: false,
+          contentMsg: this.todoMsg,
+          index: this.$store.state.itemList.length
+        }
+        this.$store.commit('pushItem',item);
         this.todoMsg = ""
         this.buttonShow = false
       }
