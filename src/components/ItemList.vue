@@ -9,9 +9,9 @@
               @updateStatus="updateStatus" ref="item"></Item>
       </div>
     </transition-group>
-    <button @click="updateShowList(-1)" :class="{unActiveButton: status !== -1}">All</button>
-    <button @click="updateShowList(0)" :class="{unActiveButton: status !== 0}">Active</button>
-    <button @click="updateShowList(1)" :class="{unActiveButton: status !== 1}">Complete</button>
+    <button @click="status = -1" :class="{unActiveButton: status !== -1}">All</button>
+    <button @click="status = 0" :class="{unActiveButton: status !== 0}">Active</button>
+    <button @click="status = 1" :class="{unActiveButton: status !== 1}">Complete</button>
   </div>
 </template>
 
@@ -29,6 +29,19 @@
         status: -1
       }
     },
+    watch:{
+      status: {
+        handler(newValue){
+          this.updateShowList(newValue)
+        }
+      },
+      itemList:{
+        handler(){
+          this.updateShowList(this.status)
+        },
+        deep: true
+      }
+    },
     methods: {
       addMsg(message) {
         let item = {
@@ -37,18 +50,15 @@
           index: this.itemList.length
         }
         this.itemList.push(item);
-        this.updateShowList(this.status)
       },
       updateMsg(message, index) {
         this.itemList[index].contentMsg = message
       },
       updateStatus(status, index) {
         this.itemList[index].isFinish = status
-        this.updateShowList(this.status)
       },
-      async updateShowList(status) {
-        this.status = status
-        if (this.status === -1) {
+      updateShowList(status){
+        if (status === -1) {
           this.showList = this.itemList
 
         } else {
